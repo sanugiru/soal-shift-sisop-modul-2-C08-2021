@@ -1,4 +1,4 @@
-# Soal Shift Sisop Modul 1 C08 2021  
+# Soal Shift Sisop Modul 2 C08 2021  
 
 Anggota:
 - 05111940000112 Deka Julian Arrizki	    
