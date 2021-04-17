@@ -22,7 +22,7 @@ char folder[1000]; //lokasi folder tiap jenis hewan
 char folder_copy[1000]; //lokasi copy 
 char name_double[100];
 char unimportant_folder[100]; //folder yang tidak penting
-char folder_keterangan[100];
+char folder_keterangan[100]; //folder buat mengisi keterangan.txt
 
 int main(){
     pid_t child_id1, child_id2, child_id3, child_id4, child_id5, child_id6, child_id7, child_id8, child_id9, child_id10;
@@ -211,15 +211,14 @@ int main(){
                             execv("/usr/bin/find", argv);
                         }
                     }
-                    // if (child_id9 > 0){
-                    //     while ((wait(&flag2))>0);
-                    //     child_id10 = fork();
-                    //     if (child_id10 <0) exit(EXIT_FAILURE);
-                    //     else if (child_id10==0){
-                    //         char *argv[] = {"find", "/home/deka/modul2/petshop/.", "-type", "f", "-name", "keterangan.txt", "-exec", "rm", "-rf", "{}", ";", NULL};
-                    //         execv("/usr/bin/find", argv);
-                    //     }
-                    // }
+                    if (child_id9 > 0){
+                        while ((wait(&flag2))>0);
+                        child_id10 = fork();
+                        if (child_id10 <0) exit(EXIT_FAILURE);
+                        else if (child_id10==0){
+                            execl("/usr/bin/rm","rm", "keterangan.txt", NULL);
+                        }
+                    }
                 }
             }
             closedir(d);
