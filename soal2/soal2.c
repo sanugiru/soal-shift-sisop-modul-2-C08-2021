@@ -258,7 +258,7 @@ int main(){
                         child_id11 = fork();
                         if (child_id11<0) exit(EXIT_FAILURE);
                         else if (child_id11==0){
-                            FILE *file = fopen(directory_keterangan, "a");
+                            FILE *file = fopen(directory_keterangan, "w");
                             if (nameee && !nameee[0]){
                                 fprintf(file, "nama : %s\numur : %s tahun\n\n", name_double, umur_double);
                             }
