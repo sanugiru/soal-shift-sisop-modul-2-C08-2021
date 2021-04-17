@@ -60,10 +60,10 @@ int main(int argc, char* argv[]){
     chillid = fork();
     if(chillid < 0) 
         exit(0);
-    if(chillid == 0)
+    if(chillid = 0)
     {
-        char *killargv[] = {"chmod", "u+x", "killer.sh", NULL};
-        execv("/bin/chmod", killargv);
+        char *argv[] = {"chmod", "u+x", "killer.sh", NULL};
+        execv("/bin/chmod", argv);
     }
 
     while(wait(&stat) > 0);
@@ -72,9 +72,10 @@ int main(int argc, char* argv[]){
 
     int stat_direct,stat_download,stat_zip,stat_enkripsi;
     char currenT1[50], currentT3[50], currenT2[50], link[50];
-    int x;
+    
     while(1){
         pid_t chillid1, chillid2, chillid3, chillid4, chillid5;
+        int x;
         time_t time1 = time(NULL);
         struct tm* loc1 = localtime(&time1);
         strftime(currenT1, 50, "%Y-%m-%d_%H:%M:%S", loc1);
@@ -97,7 +98,7 @@ int main(int argc, char* argv[]){
         if(chillid2 == 0){
             if(argv[1][1] == 'z') prctl(PR_SET_PDEATHSIG, SIGHUP);
             chdir(currenT1);
-            for(x=0;x<10;x++){
+            for(x=1;x<=10;x++){
                 time_t time2 = time(NULL);
                 struct tm* loc2 = localtime(&time2);
                 
