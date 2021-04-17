@@ -224,8 +224,8 @@ int main(){
                                 execv("/usr/bin/find", argv);   
                             }
                         }
-                    }
                     if (child_id7 > 0){
+                    }
                         while((wait(&flag2))>0);
                         child_id8 = fork();
                         if (child_id8 < 0) exit(EXIT_FAILURE);
@@ -253,19 +253,19 @@ int main(){
 
                     strcat(directory_keterangan, "/home/deka/modul2/petshop/");
                     strcat(directory_keterangan, filename);
+                    strcat(directory_keterangan, "/keterangan.txt");
                     if (child_id10 > 0){
                         while((wait(&flag2))>0);
                         child_id11 = fork();
                         if (child_id11<0) exit(EXIT_FAILURE);
                         else if (child_id11==0){
-                            FILE *file = fopen(directory_keterangan, "w");
+                            FILE *file = fopen(directory_keterangan, "a");
                             if (nameee && !nameee[0]){
                                 fprintf(file, "nama : %s\numur : %s tahun\n\n", name_double, umur_double);
                             }
                             else fprintf(file, "nama : %s\numur : %s tahun\n\n", namee, umur);
                             fclose(file);
                         }
-
                     }
                 }
             }
