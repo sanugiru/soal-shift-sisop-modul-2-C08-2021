@@ -26,11 +26,14 @@ char folder_keterangan[100];
 char umur[50]; 
 char umur_double[50]; //umur untuk gambar yang double di nama kedua
 char umur_double_pertama[50]; //umur untuk gambar yang double di nama pertama
+char directory_keterangan[100];
 
 int main(){
     pid_t child_id1, child_id2, child_id3, child_id4, child_id5, child_id6, child_id7, child_id8, child_id9, child_id10, child_id11;
     DIR *d;
+    DIR *directory;
     struct dirent *dir;
+    struct dirent *dir2;
     int flag, flag2;
     child_id1 = fork();
     if (child_id1 < 0) exit(EXIT_FAILURE);
@@ -135,11 +138,6 @@ int main(){
                         }
                         if (k!=0) break;
                     }
-                    if (nameee && nameee[0]){
-                        printf("CCCCCCCCCCCCCCCCCCCCCCC umur %s\t filename %s\n", umur_double, name_double);
-                        printf("AAAAAAAAAAAAAAAAAAAAAAA umur %s\t filename %s\n", umur_double_pertama, namee);
-                    }
-                    else printf("BBBBBBBBBBBBBBBBBBBBBB umur %s\t filename %s\n", umur, namee); 
                     
                     *temp1 = 0;
                     strcpy(filename, dir->d_name);
@@ -252,13 +250,22 @@ int main(){
                             execl("/usr/bin/rm","rm", "keterangan.txt", NULL);
                         }
                     }
+
+                    strcat(directory_keterangan, "/home/deka/modul2/petshop/");
+                    strcat(directory_keterangan, filename);
                     if (child_id10 > 0){
                         while((wait(&flag2))>0);
                         child_id11 = fork();
                         if (child_id11<0) exit(EXIT_FAILURE);
                         else if (child_id11==0){
-                            
+                            FILE *file = fopen(directory_keterangan, "a");
+                            if (nameee && !nameee[0]){
+                                fprintf(file, "nama : %s\numur : %s tahun\n\n", name_double, umur_double);
+                            }
+                            else fprintf(file, "nama : %s\numur : %s tahun\n\n", namee, umur);
+                            fclose(file);
                         }
+
                     }
                 }
             }
