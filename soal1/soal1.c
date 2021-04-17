@@ -10,24 +10,9 @@
 #include<time.h>
 #include <wait.h>
 
-// sudo date --set="2021-04-19 16:21:59"
+char cwd[]= "/home/sena/SISOP/Modul2/soalShift/soal1";
 
-
-char cwd[]= "/home/sena/SISOP/Modul2/soalShift/";
-
-// char * getTime(char * string){
-//     time_t rawtime;
-//     struct tm *info;
-
-//     time( &rawtime );
-
-//     info = localtime( &rawtime );
-
-//     strftime(string,80,"%d/%m %X", info);
-
-//     return string;
-// }
-
+/*nomor2a*/
 void makeDirectory() {
   pid_t pid;
   int status;
@@ -45,6 +30,7 @@ void makeDirectory() {
   }
 }
 
+/*nomor2b&2c*/
 void downloadAndUnzip () {
   pid_t pid;
   int status;
