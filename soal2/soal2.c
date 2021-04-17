@@ -23,7 +23,9 @@ char folder_copy[1000]; //lokasi copy
 char name_double[100];
 char unimportant_folder[100]; //folder yang tidak penting
 char folder_keterangan[100];
-char umur[50];
+char umur[50]; 
+char umur_double[50]; //umur untuk gambar yang double di nama kedua
+char umur_double_pertama[50]; //umur untuk gambar yang double di nama pertama
 
 int main(){
     pid_t child_id1, child_id2, child_id3, child_id4, child_id5, child_id6, child_id7, child_id8, child_id9, child_id10, child_id11;
@@ -92,8 +94,9 @@ int main(){
                         if (k!=0) break;
                     }
                     for (int i=0 ; i<strlen(filename3) ; i++){
-                        int k = 0, l=0, m=0, j;
+                        int k = 0, l=0, m=0, j, a=0,e=0;
                         if (filename3[i]=='_'){
+                            umur_double_pertama[0] = filename3[i-1];
                             int j = i+1;
                             k = 0;
                             while (filename3[j]!=';'){
@@ -101,6 +104,7 @@ int main(){
                                 k++;
                                 j++;
                             }
+                            
                             if (nameee && nameee[0]){
                                 j+=1;
                                 while (filename3[j]!=';'){
@@ -108,10 +112,22 @@ int main(){
                                     l++;
                                     j++;
                                 }
+                                for (int a=0 ; a<strlen(filename3) ; a++){
+                                    if (filename3[a]==';'){
+                                        int b = a+1;
+                                        int c = 0;
+                                        while (filename3[b]!=';'){
+                                            namee[c]=filename3[b];
+                                            c++;
+                                            b++;
+                                        }
+                                    }
+                                    break;
+                                }
                             }
                             j+=1;
-                            while (filename3[j+1]!='j' && filename3[j]!='.'){
-                                umur[m] = filename3[j];
+                            while (filename3[j+1]!='j'){
+                                umur_double[m] = filename3[j];
                                 j++;
                                 m++;
                             }
@@ -120,9 +136,10 @@ int main(){
                         if (k!=0) break;
                     }
                     if (nameee && nameee[0]){
-                        printf("umur %s\t filename %s\n", umur, nameee);
+                        printf("CCCCCCCCCCCCCCCCCCCCCCC umur %s\t filename %s\n", umur_double, name_double);
+                        printf("AAAAAAAAAAAAAAAAAAAAAAA umur %s\t filename %s\n", umur_double_pertama, namee);
                     }
-                    else printf("umur %s\t filename %s\n", umur, namee); 
+                    else printf("BBBBBBBBBBBBBBBBBBBBBB umur %s\t filename %s\n", umur, namee); 
                     
                     *temp1 = 0;
                     strcpy(filename, dir->d_name);
@@ -240,7 +257,7 @@ int main(){
                         child_id11 = fork();
                         if (child_id11<0) exit(EXIT_FAILURE);
                         else if (child_id11==0){
-
+                            
                         }
                     }
                 }
