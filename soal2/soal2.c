@@ -21,6 +21,7 @@ char filename_double[100]; //lokasi folder yang memiliki file double
 char folder[1000]; //lokasi folder tiap jenis hewan
 char folder_copy[1000]; //lokasi copy 
 char name_double[100];
+char name_double_a[100];
 char unimportant_folder[100]; //folder yang tidak penting
 char folder_keterangan[100];
 char umur[50]; 
@@ -76,6 +77,7 @@ int main(){
                     memset(folder_keterangan,0,sizeof(folder_keterangan));
                     memset(umur,0,sizeof(umur));
                     memset(directory_keterangan,0,sizeof(directory_keterangan));
+                    memset(name_double_a,0,sizeof(name_double_a));
                     
                     for (int i=0 ; i<strlen(filename2) ; i++){
                         int k = 0, l= 0;
@@ -113,6 +115,7 @@ int main(){
                                 j+=1;
                                 while (filename3[j]!=';'){
                                     name_double[l] = filename3[j];
+                                    name_double_a[l] = filename3[j];
                                     l++;
                                     j++;
                                 }
@@ -259,7 +262,7 @@ int main(){
                     if (file){
                         if (nameee && nameee[0]){
                             fprintf(file, "nama : %s\numur : %s tahun\n\n", namee, umur_double_pertama);
-                            fprintf(file, "nama : %s\numur : %s tahun\n\n", name_double, umur_double);
+                            fprintf(file, "nama : %s\numur : %s tahun\n\n", name_double_a, umur_double);
                         }
                         else 
                             fprintf(file, "nama : %s\numur : %s tahun\n\n", namee, umur);
