@@ -29,7 +29,7 @@ char umur_double_pertama[50]; //umur untuk gambar yang double di nama pertama
 char directory_keterangan[100];
 
 int main(){
-    pid_t child_id1, child_id2, child_id3, child_id4, child_id5, child_id6, child_id7, child_id8, child_id9, child_id10, child_id11;
+    pid_t child_id1, child_id2, child_id3, child_id4, child_id5, child_id6, child_id7, child_id8, child_id9, child_id10, child_id11, child_id12;
     DIR *d;
     DIR *directory;
     struct dirent *dir;
@@ -75,6 +75,7 @@ int main(){
                     memset(filename_double, 0 ,sizeof(filename_double));
                     memset(folder_keterangan,0,sizeof(folder_keterangan));
                     memset(umur,0,sizeof(umur));
+                    memset(directory_keterangan,0,sizeof(directory_keterangan));
                     
                     for (int i=0 ; i<strlen(filename2) ; i++){
                         int k = 0, l= 0;
@@ -172,6 +173,10 @@ int main(){
                     strcat(folder_keterangan, "/");
                     strcat(folder_keterangan, "keterangan.txt");
 
+                    strcat(directory_keterangan, "/home/deka/modul2/petshop/");
+                    strcat(directory_keterangan, filename);
+                    strcat(directory_keterangan, "/keterangan.txt");
+
                     if (check_dir) {
                         closedir(check_dir);
                     }
@@ -208,7 +213,7 @@ int main(){
                             child_id6 = fork();
                             if (child_id6<0) exit(EXIT_FAILURE);
                             if (child_id6==0){
-                                char *argv[] = {"find", folder, "-type", "f", "-name", star , "-exec", "cp", "{}", strcat(filename_double,name_double), ";", NULL};
+                                char *argv[] = {"find", folder, "-type", "f", "-name", star , "-exec", "cp", "{}", filename_double, ";", NULL};
                                 execv("/usr/bin/find", argv);
                             }
                         }
@@ -238,7 +243,7 @@ int main(){
                         child_id9 = fork();
                         if (child_id9<0) exit(EXIT_FAILURE);
                         else if (child_id9==0){
-                            char *argv[] = {"find", "/home/deka/modul2/petshop/", "-type", "f", "-name", "keterangan.txt" , "-exec", "cp" ,"{}", folder_keterangan, ";", NULL};
+                            char *argv[] = {"find", "/home/deka/modul2/petshop/", "-type", "f", "-name", "keterangan.txt" , "-exec", "cp", "nt","{}", folder_keterangan, ";", NULL};
                             execv("/usr/bin/find", argv);
                         }
                     }
@@ -250,23 +255,16 @@ int main(){
                             execl("/usr/bin/rm","rm", "keterangan.txt", NULL);
                         }
                     }
-
-                    strcat(directory_keterangan, "/home/deka/modul2/petshop/");
-                    strcat(directory_keterangan, filename);
-                    strcat(directory_keterangan, "/keterangan.txt");
-                    if (child_id10 > 0){
-                        while((wait(&flag2))>0);
-                        child_id11 = fork();
-                        if (child_id11<0) exit(EXIT_FAILURE);
-                        else if (child_id11==0){
-                            FILE *file = fopen(directory_keterangan, "a");
-                            if (nameee && !nameee[0]){
-                                fprintf(file, "nama : %s\numur : %s tahun\n\n", name_double, umur_double);
-                            }
-                            else fprintf(file, "nama : %s\numur : %s tahun\n\n", namee, umur);
-                            fclose(file);
+                    FILE *file = fopen(directory_keterangan, "a");
+                    if (file){
+                        if (nameee && nameee[0]){
+                            fprintf(file, "nama : %s\numur : %s tahun\n\n", namee, umur_double_pertama);
+                            fprintf(file, "nama : %s\numur : %s tahun\n\n", name_double, umur_double);
                         }
+                        else 
+                            fprintf(file, "nama : %s\numur : %s tahun\n\n", namee, umur);
                     }
+                    fclose(file);
                 }
             }
             closedir(d);
