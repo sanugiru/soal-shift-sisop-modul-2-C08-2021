@@ -7,6 +7,7 @@ Anggota:
 
 ## SOAL 1   
 Pada hari ulang tahun Stevany, Steven ingin memberikan Stevany zip berisikan hal-hal yang disukai Stevany. Steven ingin isi zipnya menjadi rapi dengan membuat folder masing-masing sesuai extensi.
+
 a. Dikarenakan Stevany sangat menyukai huruf Y, Steven ingin nama folder-foldernya adalah Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg.  
 
 b. untuk musik Steven mendownloadnya dari link di bawah, film dari link di bawah lagi, dan foto dari link dibawah juga.  
@@ -15,7 +16,6 @@ b. untuk musik Steven mendownloadnya dari link di bawah, film dari link di bawah
         Musik : https://drive.google.com/file/d/1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J/view
         Film  : https://drive.google.com/file/d/1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp/view  
     
-    
 c. Steven tidak ingin isi folder yang dibuatnya berisikan zip, sehingga perlu meng-extract-nya setelah didownload serta,  
 
 d. memindahkannya ke dalam folder yang telah dibuat (hanya file yang dimasukkan).  
@@ -23,6 +23,52 @@ d. memindahkannya ke dalam folder yang telah dibuat (hanya file yang dimasukkan)
 e. Untuk memudahkan Steven, ia ingin semua hal di atas berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany).   
 
 f. Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip dengan nama Lopyu_Stevany.zip dan semua folder akan di delete(sehingga hanya menyisakan .zip).
+
+### **Pembahasan**
+- **NOMOR 1A**
+  ```c
+  char cwd[]= "/home/sena/SISOP/Modul2/soalShift/soal1/";
+  char *fileStevany[] = {"Pyoto", "Musyik", "Fylm"};
+  char *url[]={"https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download",
+               "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download",
+               "https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download"};
+  char *fileZip[] = {"Foto_for_Stevany.zip", "Musik_for_Stevany.zip", "Film_for_Stevany.zip"};
+  char *fileUnzip[] = {"FOTO", "MUSIK", "FILM"};
+  ```
+  - Pertama-tama inisialisasi array yang diisi dengan nama-nama folder yang nantinya akan dibuat dan link download file musik, film, dan foto.
+  - `cwd` menyimoan path program ini, `fileStevany` menyimpan nama file yang akan dibuat, `url` menyimpan link download, `fileZip` menyimpan nama dari file zip yang didownload, `fileUnzip` menyimpan nama folder hasil extract zip yang sudah didownload.
+  ```c
+  void makeDirectory() {
+    pid_t pid;
+    int status;
+    pid = fork();
+
+    if ((chdir(cwd)) < 0) {
+      exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0){
+      char *argv[] = {"mkdir", fileStevany[0], fileStevany[1], fileStevany[2], NULL};
+      execv("/bin/mkdir", argv);
+    } 
+    
+    else {
+      while((wait(&status)) > 0);
+      return;          
+    }
+  }
+  ```
+  - Buat fungsi `makeDirectory` yang akan membuat folder baru.
+  - Memanggil `fork()` untuk membuat child process.
+  - Jika process merupakan child process, maka `execv` akan mengeksekusi argumen dalam `argv[]` dan membuat folder baru dengan nama Pyoto, Musyik, dan Fylm.
+  - jika process adalah parent, maka parent akan menunggu sampai child process selesai kemudian akan return ke fungsi `main`.
+- **NOMOR 1B**
+- **NOMOR 1C**
+- **NOMOR 1D**
+- **NOMOR 1E**
+- **NOMOR 1F**
+### **Screenshot Output**
+### **Kendala**
 
 
 ## SOAL 2
