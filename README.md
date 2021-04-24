@@ -36,7 +36,7 @@ f. Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip denga
   char *fileUnzip[] = {"FOTO", "MUSIK", "FILM"};
   ```
   - Pertama-tama inisialisasi array yang diisi dengan nama-nama folder yang nantinya akan dibuat dan link download file musik, film, dan foto.
-  - `cwd` menyimoan path program ini, `fileStevany` menyimpan nama file yang akan dibuat, `url` menyimpan link download, `fileZip` menyimpan nama dari file zip yang didownload, `fileUnzip` menyimpan nama folder hasil extract zip yang sudah didownload.
+  - `cwd` menyimpan path program ini, `fileStevany` menyimpan nama file yang akan dibuat, `url` menyimpan link download, `fileZip` menyimpan nama dari file zip yang didownload, `fileUnzip` menyimpan nama folder hasil extract zip yang sudah didownload.
   ```c
   void makeDirectory() {
     pid_t pid;
