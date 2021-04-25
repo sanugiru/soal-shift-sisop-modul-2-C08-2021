@@ -423,6 +423,7 @@ Dengan adanya 2 command yang diminta pada soal dimana yang pertama terdapat comm
 
 **Nomor 3e**
 Dengan adanya 2 command yaitu `-x` & `-z`, maka akan dihasilkan 2 output yang berbeda ketika killer dijalankan yang akan ditampilkan dalam gambar sebagai berikut :
+
 -Command `-x`:
 
 ![-x](https://user-images.githubusercontent.com/70801807/115993127-99c30000-a5fb-11eb-8b43-4fe06cd2e57f.PNG)
@@ -430,6 +431,8 @@ Dengan adanya 2 command yaitu `-x` & `-z`, maka akan dihasilkan 2 output yang be
 ![-xprooof](https://user-images.githubusercontent.com/70801807/115993177-d55dca00-a5fb-11eb-8487-b8f533d58fc6.PNG)
 
 Dari foto di atas terlihat bahwa sesaat setelah killer dijalankan program masih meneruskan tugasnya hingga melakukan zip dan delete folder
+
+
 
 -Commmand `-z`:
 
