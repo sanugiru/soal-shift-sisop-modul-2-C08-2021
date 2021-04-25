@@ -85,7 +85,7 @@ void downloadAndUnzip () {
   }
 }
 
-/*nomor 1f*/
+/*nomor 1d*/
 void moveFiles() {
     pid_t pid;
     int status;
@@ -201,7 +201,8 @@ int main() {
     downloadAndUnzip();
     moveFiles();
   }
-
+  
+  /*nomor 1f*/
   else if (local->tm_mon+1==4 && local->tm_mday == 9 && local->tm_hour == 22 && local->tm_min == 22 && local->tm_sec == 0){
     zipFiles();
     removeFolder();
