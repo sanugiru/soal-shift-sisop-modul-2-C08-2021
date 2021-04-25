@@ -152,7 +152,98 @@ f. Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip denga
   - kemudian jika telah selesai memindahkan files dari file FOTO ke file Pyoto, selanjutnya akan memanggil `fork()` kembali untuk memindahkan files dari file MUSIK ke file Musyik dengan command yang sama seperti sebelumnya
   - dan terakhir, setelah proses sebelumnya selesai, akan mengeksekusi kode dalam else yang akan memindahkan files dari file FILM ke file Fylm.
 - **NOMOR 1E**
+  ```c
+  int main() {
+  pid_t pid, sid;        // Variabel untuk menyimpan PID
+
+  pid = fork();     // Menyimpan PID dari Child Process
+
+  int status;
+
+  if (pid < 0) {
+    exit(EXIT_FAILURE);
+  }
+
+  if (pid > 0) {
+    exit(EXIT_SUCCESS);
+  }
+
+  umask(0);
+
+  sid = setsid();
+  if (sid < 0) {
+    exit(EXIT_FAILURE);
+  }
+
+  if ((chdir(cwd)) < 0) {
+    exit(EXIT_FAILURE);
+  }
+
+  close(STDIN_FILENO);
+  close(STDOUT_FILENO);
+  close(STDERR_FILENO);
+
+  while (1) {
+    time_t now = time(NULL);
+    struct tm *local = localtime(&now);
+  
+  /*nomor 1e*/
+  if (local->tm_mon+1==4 && local->tm_mday == 9 && local->tm_hour == 16 && local->tm_min == 22 && local->tm_sec == 0){
+    makeDirectory();
+    downloadAndUnzip();
+    moveFiles();
+  }
+  ```
+  - karena diperintahakn agar proses berjalan dibackground, maka digunakan template untuk membuat daemon process
+  - supaya proses otomatis berjalan otomatis 6 jam sebelum ulang tahun Stevany, dibuat dahulu variabel now bertipe `time_t` untuk mendapatkan waktu system, kemudian dibuat conditional-if yang akan mengecek apabila waktu sekarang adalah 09 April pukul 16:22:00, maka panggil fungsi yang sudah dibuat di nomor sebelumnya yaitu fungsi `makeDirectory()`, `downloadandUnzip`, dan `moveFiles`
 - **NOMOR 1F**
+  ```c
+  else if (local->tm_mon+1==4 && local->tm_mday == 9 && local->tm_hour == 22 && local->tm_min == 22 && local->tm_sec == 0){
+    zipFiles();
+    removeFolder();
+  }
+  ```
+  - selanjutnya apabila waktu sekarang adalah ulang tahun Stevany, yaitu 09 April pukul 22:22:00 maka fungsi `zipFiles()` dan `removeFolder()` akan dipanggil
+  ```c
+  void zipFiles() {
+    pid_t pid;
+    int status;
+    pid = fork();
+
+    if(pid == 0) {
+      char *argv[] = {"zip", "-q", "-r", "-m", "Lopyu_Stevany.zip", fileStevany[0], fileStevany[1], fileStevany[2], NULL};
+      execv("/usr/bin/zip", argv);
+    }
+
+    else {
+      while(wait(&status) > 0);
+      return;
+    }
+  }
+  ```
+  - di dalam fungsi `zipFiles` akan dipanggil `fork()` untuk membuat child process yang akan men-zip folder Pyoto, Musyik, dan Fylm kedalam Lopyu_Stevany.zip
+  - zip menggunakan `execv` dan `zip [options]  zipFIle  fileDir/fileList`, `-r` untuk men-zip files secarar recursive, `-m` untuk menghapus original files setelah di zip.
+  - apabila sudah selesai menzip, akan kembali ke fungsi main.
+  ```c
+  void removeFolder() {
+    pid_t pid;
+    int status;
+    pid = fork();
+
+    if(pid == 0) {
+      char *argv[] = {"rm", "-d", fileUnzip[0], fileUnzip[1], fileUnzip[2], NULL};
+      execv("/usr/bin/rm", argv);
+    }
+
+    else{
+      while(wait(&status) > 0);
+      return;
+    }
+  }
+  ```
+  - terakhir, untuk menghapus folder yang ada, dalam fungsi `removeFolder()` dipanggil `fork()` kembali untuk membuat child process
+  - untuk menghuapus folder menggunakan `execv` dan `rm [OPTION] FILE`, `-d` untuk menghapus directory
+  - setelah selesai menghapus folder FILM, MUSIK, dan FILM selanjutnya kembali ke fungsi main.
 ### **Screenshot Output**
 ### **Kendala**
 
@@ -178,7 +269,7 @@ umur  : 2 tahun
 
 ## **Pembahasan**
 - **NOMOR 2a**
-```
+```c
 child_id1 = fork();
     if (child_id1 < 0) exit(EXIT_FAILURE);
     if (child_id1 == 0) {
@@ -202,20 +293,20 @@ child_id1 = fork();
         }
 ```
 - pertama saya membuat fork, kemudian untuk child_id bernilai 0 dilakukan perintah unzip zip file yang diberikan oleh soal
-```
+```c
 if (child_id1 == 0) {
    execl("/usr/bin/unzip", "unzip", "pets.zip", NULL); 
 }
 ```
 - kemudian menghapus semua folder yang tidak penting, karena folder maka ciri utama dalam penamaan tidak memakai titik (.) sehingga saya mengakali dengan nama. setiap nama yang tidak ada titik (.) maka itu folder dan apabila ada maka itu termasuk file yang digunakan pada proses selanjutnya.
-```
+```c
 d = opendir("/home/deka/modul2/petshop/");
 while ((dir = readdir(d)) != NULL){
 char *temp1 = strchr(dir->d_name,';');
 char *temp2 = strchr(dir->d_name, '.');    
 ```
 - setelah mengetahui mana yang folder dan mana yang file maka tinggal hapus folder yang diperoleh
-```
+```c
 if (!temp1 && !temp2) {
         strcpy(unimportant_folder, dir->d_name);
         child_id2 = fork();
@@ -228,7 +319,7 @@ if (!temp1 && !temp2) {
 }
 ```
 - **NOMOR 2b**
-```
+```c
 if (check_dir) {
         closedir(check_dir);
 }
@@ -242,7 +333,7 @@ else if (ENOENT == errno){
 ```
 - saya looping semua file yang ada di folder /home/deka/modul2/petshop/ dan membuat namanya seperti filename dimana filename adalah variable yang saya buat untuk menyimpan jenis-jenis hewan
 - **NOMOR 2c**
-```
+```c
 if (child_id3 > 0){
         while ((wait(&flag2))>0);
         child_id4 = fork();
@@ -253,7 +344,7 @@ if (child_id3 > 0){
         }
 ```
 - langkah diatas digunakan untuk membuat folder sebanyak dan senama dengan semua jenis hewan yang ada di folder petshop
-```
+```c
 if (child_id4 > 0){
         while((wait(&flag2))>0);
         if (nameee && !nameee[0]){  
@@ -268,7 +359,7 @@ if (child_id4 > 0){
 ```
 - setelah semua folder dengan nama jenis hewan berhasil dibuat maka semua file akan dipindah ke folder dengan jenis masing-masing. akan tetapi pada langkah ini hanya untuk file yang tidak double jenis dan nama hewannya
 - **NOMOR 2d**
-```
+```c
 if (child_id5 > 0){
         while((wait(&flag2))>0);
         if (nameee && nameee[0]){            
@@ -282,7 +373,7 @@ if (child_id5 > 0){
 }
 ```
 - pertama saya copy file yang double ke folder jenis hewan yang double
-```
+```c
 if (child_id6 > 0){
         while((wait(&flag2))>0);
         if (nameee && nameee[0]){  
@@ -297,7 +388,7 @@ if (child_id6 > 0){
 ```
 - kemudian saya ganti namanya sesuai dengna nama jenis hewan yang double
 - **NOMOR 2e**
-```
+```c
 if (child_id7 > 0){
         while((wait(&flag2))>0);
         child_id8 = fork();
@@ -308,7 +399,7 @@ if (child_id7 > 0){
 }
 ```
 - pertama saya buat file keterangan.txt yang isinya kosong di directory petshop
-```
+```c
 if (child_id8 > 0){
         while ((wait(&flag2))>0);
         child_id9 = fork();
@@ -320,7 +411,7 @@ if (child_id8 > 0){
 }
 ```
 - kemudian saya copy file keterangan.txt ke semua folder jenis hewan
-```
+```c
 if (child_id9 > 0){
         while ((wait(&flag2))>0);
         child_id10 = fork();
@@ -332,7 +423,7 @@ if (child_id9 > 0){
 ```
 - sebelum mengisi keterangan.txt saya hapus terlebih dahulu file keterangan.txt yang ada di directory petshop
 - kemudian saya isi setiap file keterangan.txt di tiap folder jenis hewan dengan nama dan umur dari hewan tersebut
-```
+```c
 FILE *file = fopen(directory_keterangan, "a");
 if (file){
         if (nameee && nameee[0]){
@@ -371,7 +462,7 @@ e.Pembimbing magang Ranora juga ingin nantinya program utama yang dibuat Ranora 
 ##**Pembahasan**
 
 -**Nomor 3a**
-```
+```c
 time_t time1 = time(NULL);
         struct tm* loc1 = localtime(&time1);
         strftime(currenT1, 50, "%Y-%m-%d_%H:%M:%S", loc1);
@@ -394,7 +485,7 @@ Untuk nomor 3a akan dibuat folder dengan nama time stamp, dimana timestamp akan 
 
 
 -**Nomor 3b**
-```
+```c
 while(wait(&stat_direct)>0);
  
                 chillid2 = fork();
@@ -427,7 +518,7 @@ Untuk nomor 3b dibutuhkan `link` untuk mendownload, `(time2 & 1000) + 50` untuk 
 ![-xproof](https://user-images.githubusercontent.com/70801807/115993359-9c722500-a5fc-11eb-9344-be4f09ad44d9.PNG)
 
 -**Nomor 3c**
-```
+```c
                     while(wait(&stat_download)>0);
                     char sukses[30] = "Download Succes";
                     caes_ciph(sukses, 5);
@@ -436,7 +527,7 @@ Untuk nomor 3b dibutuhkan `link` untuk mendownload, `(time2 & 1000) + 50` untuk 
                     fclose(encrypt);
 ```
 Fungsi Caesar Cipher :
-```
+```c
 void caes_ciph(char* sukses, int shift){
     char huruf;
     int x;
@@ -464,7 +555,7 @@ Setelah folder berisikan 10 foto maka program akan membuat file `status.txt` dim
 ![stat](https://user-images.githubusercontent.com/70801807/115993612-ca0b9e00-a5fd-11eb-91b1-ea7827409116.PNG)
 ![caes](https://user-images.githubusercontent.com/70801807/115993618-ce37bb80-a5fd-11eb-8828-2bc58ad03e07.PNG)
 
-```
+```c
   while(wait(&stat_enkripsi)>0);
                     chdir("..");
                     strcpy(currentT3, currenT1);
@@ -480,7 +571,7 @@ Setelah folder berisikan 10 foto maka program akan membuat file `status.txt` dim
 ```
 Untuk melakukan zip, pertama akan dilakukan string copy currenT1 ke currentT3 {dimana currenT1 adalah nama folder yang sudah dibuat}, tujuan string copy ini agar nama folder sesudah dizip tetap sama dengan nama folder sesudah di zip, lalu akan dibuat sebuah proses baru dengan fork dan jika tersedia maka akan dibuat zip dengan nama currentT3.
 
-```
+```c
                     while(wait(&stat_zip)>0);
                     chillid5 = fork();
                     if(chillid5<0)
@@ -493,7 +584,7 @@ Untuk melakukan zip, pertama akan dilakukan string copy currenT1 ke currentT3 {d
 Untuk melakukan delete, pertama akan menunggu proses zip selesai lalu membuat proses baru dengan fork dan selanjutnya folder yang telah di zip di delete dengan command "rm"
 
 **Nomor 3d**
-```
+```c
     if(argv[1][1]=='x'){
         FILE* kill;
         kill = fopen("killer.sh", "w");
