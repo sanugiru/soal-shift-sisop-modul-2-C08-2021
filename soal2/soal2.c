@@ -232,8 +232,8 @@ int main(){
                                 execv("/usr/bin/find", argv);   
                             }
                         }
-                    if (child_id7 > 0){
                     }
+                    if (child_id7 > 0){
                         while((wait(&flag2))>0);
                         child_id8 = fork();
                         if (child_id8 < 0) exit(EXIT_FAILURE);
