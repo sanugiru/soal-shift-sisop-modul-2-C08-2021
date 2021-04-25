@@ -15,6 +15,7 @@ Anggota:
     + [**Screenshot Output**](#--screenshot-output---1)
     + [**Kendala**](#--kendala---1)
   * [SOAL 3](#soal-3)
+    + [**Pembahasan**](#--pembahasan---2)
     + [**Kendala**](#--kendala---2)
 
 ## SOAL 1   
@@ -479,7 +480,7 @@ d.Untuk mempermudah pengendalian program, pembimbing magang Ranora ingin program
 
 e.Pembimbing magang Ranora juga ingin nantinya program utama yang dibuat Ranora dapat dijalankan di dalam dua mode. Untuk mengaktifkan mode pertama, program harus dijalankan dsdengan argumen -z, dan Ketika dijalankan dalam mode pertama, program utama akan langsung menghentikan semua operasinya Ketika program Killer dijalankan. Sedangkan untuk mengaktifkan mode kedua, program harus dijalankan dengan argumen -x, dan Ketika dijalankan dalam mode kedua, program utama akan berhenti namun membiarkan proses di setiap direktori yang masih berjalan hingga selesai (Direktori yang sudah dibuat akan mendownload gambar sampai selesai dan membuat file txt, lalu zip dan delete direktori).
 
-###**Pembahasan**
+### **Pembahasan**
 
 -**Nomor 3a**
 ```c
