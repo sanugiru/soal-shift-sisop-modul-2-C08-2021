@@ -156,6 +156,111 @@ else if (ENOENT == errno){
 ```
 - saya looping semua file yang ada di folder /home/deka/modul2/petshop/ dan membuat namanya seperti filename dimana filename adalah variable yang saya buat untuk menyimpan jenis-jenis hewan
 - **NOMOR 2c**
-
+```
+if (child_id3 > 0){
+        while ((wait(&flag2))>0);
+        child_id4 = fork();
+        if (child_id4 < 0) exit(EXIT_FAILURE);
+        else if (child_id4 == 0){
+                char *argv[] = {"find", "/home/deka/modul2/petshop/." ,"-type", "f", "-name", strcat(filename,"*jpg"), "-exec", "mv", "-nt", folder, "{}", "+", NULL};
+                execv("/usr/bin/find", argv);
+        }
+```
+- langkah diatas digunakan untuk membuat folder sebanyak dan senama dengan semua jenis hewan yang ada di folder petshop
+```
+if (child_id4 > 0){
+        while((wait(&flag2))>0);
+        if (nameee && !nameee[0]){  
+                child_id5 = fork();
+                if (child_id5 < 0) exit(EXIT_FAILURE);
+                else if (child_id5 == 0){   
+                        char *argv[] = {"find", folder, "-type", "f", "-name", star2 , "-exec", "mv","{}", strcat(folder_copy, ".jpg"),";" , NULL};
+                        execv("/usr/bin/find", argv);   
+                }
+        }
+}
+```
+- setelah semua folder dengan nama jenis hewan berhasil dibuat maka semua file akan dipindah ke folder dengan jenis masing-masing. akan tetapi pada langkah ini hanya untuk file yang tidak double jenis dan nama hewannya
 - **NOMOR 2d**
+```
+if (child_id5 > 0){
+        while((wait(&flag2))>0);
+        if (nameee && nameee[0]){            
+                child_id6 = fork();
+                if (child_id6<0) exit(EXIT_FAILURE);
+                if (child_id6==0){
+                        char *argv[] = {"find", folder, "-type", "f", "-name", star , "-exec", "cp", "{}", filename_double, ";", NULL};
+                        execv("/usr/bin/find", argv);
+                }
+        }
+}
+```
+- pertama saya copy file yang double ke folder jenis hewan yang double
+```
+if (child_id6 > 0){
+        while((wait(&flag2))>0);
+        if (nameee && nameee[0]){  
+                child_id7 = fork();
+                if (child_id7 < 0) exit(EXIT_FAILURE);
+                else if (child_id7 == 0){   
+                        char *argv[] = {"find", folder, "-type", "f", "-name", star , "-exec", "mv","{}", strcat(folder_copy, ".jpg"),";" , NULL};
+                        execv("/usr/bin/find", argv);   
+                }
+        }
+}
+```
+- kemudian saya ganti namanya sesuai dengna nama jenis hewan yang double
 - **NOMOR 2e**
+```
+if (child_id7 > 0){
+        while((wait(&flag2))>0);
+        child_id8 = fork();
+        if (child_id8 < 0) exit(EXIT_FAILURE);
+        else if (child_id8==0){
+                execl("/usr/bin/touch", "touch", "keterangan.txt", NULL);
+        }
+}
+```
+- pertama saya buat file keterangan.txt yang isinya kosong di directory petshop
+```
+if (child_id8 > 0){
+        while ((wait(&flag2))>0);
+        child_id9 = fork();
+        if (child_id9<0) exit(EXIT_FAILURE);
+        else if (child_id9==0){
+                char *argv[] = {"find", "/home/deka/modul2/petshop/", "-type", "f", "-name", "keterangan.txt" , "-exec", "cp", "nt","{}", folder_keterangan, ";", NULL};
+                execv("/usr/bin/find", argv);
+        }
+}
+```
+- kemudian saya copy file keterangan.txt ke semua folder jenis hewan
+```
+if (child_id9 > 0){
+        while ((wait(&flag2))>0);
+        child_id10 = fork();
+        if (child_id10 <0) exit(EXIT_FAILURE);
+        else if (child_id10==0){
+                execl("/usr/bin/rm","rm", "keterangan.txt", NULL);
+        }
+}
+```
+- sebelum mengisi keterangan.txt saya hapus terlebih dahulu file keterangan.txt yang ada di directory petshop
+- kemudian saya isi setiap file keterangan.txt di tiap folder jenis hewan dengan nama dan umur dari hewan tersebut
+```
+FILE *file = fopen(directory_keterangan, "a");
+if (file){
+        if (nameee && nameee[0]){
+                fprintf(file, "nama : %s\numur : %s tahun\n\n", namee, umur_double_pertama);
+                fprintf(file, "nama : %s\numur : %s tahun\n\n", name_double_a, umur_double);
+        }
+        else 
+                fprintf(file, "nama : %s\numur : %s tahun\n\n", namee, umur);
+        }
+fclose(file);
+```
+
+### **Screenshot Output**
+
+### **Kendala**
+1. kesulitan searching syntax dari beberapa instruksi sehingga banyak waktu terbuang hanya untuk mencari syntax yang benar
+2. saya menggunakan fork setiap pergantian proses sehingga membutuhkan code yang banyak
