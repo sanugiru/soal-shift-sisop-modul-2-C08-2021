@@ -422,17 +422,12 @@ Untuk melakukan delete, pertama akan menunggu proses zip selesai lalu membuat pr
 Dengan adanya 2 command yang diminta pada soal dimana yang pertama terdapat command `-x` dimana command `-x` akan membuat program killer membunuh parent proses sedangkan membiarkan child proses bekerja hingga selesai, sedangkan untuk command `-z` program killer akan membunuh semua proses yang sedang berjalan sehingga program akan berhenti sesaat setelah program kille dijalankan
 
 **Nomor 3e**
+
 Dengan adanya 2 command yaitu `-x` & `-z`, maka akan dihasilkan 2 output yang berbeda ketika killer dijalankan yang akan ditampilkan dalam gambar sebagai berikut :
 
 -Command `-x`:
-
-gambar 1
 ![-x](https://user-images.githubusercontent.com/70801807/115993127-99c30000-a5fb-11eb-8b43-4fe06cd2e57f.PNG)
-
-gambar 2
 ![-xproof](https://user-images.githubusercontent.com/70801807/115993168-cd058f00-a5fb-11eb-84c3-05d0e5ef55ac.PNG)
-
-gambar 3
 ![-xprooof](https://user-images.githubusercontent.com/70801807/115993177-d55dca00-a5fb-11eb-8487-b8f533d58fc6.PNG)
 
 
@@ -443,10 +438,7 @@ Dari foto di atas terlihat bahwa sesaat setelah killer dijalankan program masih 
 
 -Commmand `-z`:
 
-gambar 1
 ![-z](https://user-images.githubusercontent.com/70801807/115993195-ed354e00-a5fb-11eb-8b5f-42a34189f9fc.PNG)
-
-gambar 2
 ![-zprooooff](https://user-images.githubusercontent.com/70801807/115993201-f58d8900-a5fb-11eb-99ed-aae12c9d3655.PNG)
 
 Dari foto di atas terlihat bahwa sesaat setelah killer dijalakan program menghentikan prosesnya.
