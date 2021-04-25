@@ -245,8 +245,16 @@ f. Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip denga
   - untuk menghuapus folder menggunakan `execv` dan `rm [OPTION] FILE`, `-d` untuk menghapus directory
   - setelah selesai menghapus folder FILM, MUSIK, dan FILM selanjutnya kembali ke fungsi main.
 ### **Screenshot Output**
-### **Kendala**
+- output pada saat 09 April pukul 16:22:00
+![162200](https://user-images.githubusercontent.com/72660860/115996641-460be300-a60a-11eb-9323-4afc4b0b1c17.png)
+- output pada saaat 09 April pukul 22:22:00
+![222200](https://user-images.githubusercontent.com/72660860/115996580-0f35cd00-a60a-11eb-98ab-f8eb11e2ec36.png)
+- isi dari Lopyu_Stevany.zip
+![isizip](https://user-images.githubusercontent.com/72660860/115996872-3b9e1900-a60b-11eb-8f62-823ceb105685.png)
 
+### **Kendala**
+- sempat bingung dengan penggunaan fork dan exec, jadinya saat do-run fungsi `moveFiles()` tidak terpanggil karena proses berhenti di fungsi `downloadAndUnzip` dan tidak kembali ke fungsi main untuk mengeksekusi kode setelahnya.
+- file zip yang di download gagal terdownload menjadi zip, alhasil tidak ada file yang bisa di unzip, jadi harus berkali-kali coba di-run dan ditunggu sampai bisa terdownload.
 
 ## SOAL 2
 
@@ -267,7 +275,7 @@ umur  : 3 tahun
 nama : miko
 umur  : 2 tahun
 
-## **Pembahasan**
+### **Pembahasan**
 - **NOMOR 2a**
 ```c
 child_id1 = fork();
@@ -459,7 +467,7 @@ d.Untuk mempermudah pengendalian program, pembimbing magang Ranora ingin program
 
 e.Pembimbing magang Ranora juga ingin nantinya program utama yang dibuat Ranora dapat dijalankan di dalam dua mode. Untuk mengaktifkan mode pertama, program harus dijalankan dsdengan argumen -z, dan Ketika dijalankan dalam mode pertama, program utama akan langsung menghentikan semua operasinya Ketika program Killer dijalankan. Sedangkan untuk mengaktifkan mode kedua, program harus dijalankan dengan argumen -x, dan Ketika dijalankan dalam mode kedua, program utama akan berhenti namun membiarkan proses di setiap direktori yang masih berjalan hingga selesai (Direktori yang sudah dibuat akan mendownload gambar sampai selesai dan membuat file txt, lalu zip dan delete direktori).
 
-##**Pembahasan**
+###**Pembahasan**
 
 -**Nomor 3a**
 ```c
