@@ -63,8 +63,94 @@ f. Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip denga
   - Jika process merupakan child process, maka `execv` akan mengeksekusi argumen dalam `argv[]` dan membuat folder baru dengan nama Pyoto, Musyik, dan Fylm.
   - jika process adalah parent, maka parent akan menunggu sampai child process selesai kemudian akan return ke fungsi `main`.
 - **NOMOR 1B**
+  ```c
+  void downloadAndUnzip () {
+  pid_t pid;
+  int status;
+    pid = fork();
+  
+  if ((chdir(cwd)) < 0) {
+      exit(EXIT_FAILURE);
+  }
+  
+  if(pid==0){
+  
+      if (fork() == 0) {              // child process -- download FOTO
+        char *argv[] = {"wget", "--no-check-certificate", url[0], "-O", fileZip[0], NULL};
+        execv("/usr/bin/wget", argv);
+      } 
+  
+      else {
+        while((wait(&status)) > 0);
+  
+        if (fork() == 0) {         // child process -- download MUSIK
+            char *argv[] = {"wget", "--no-check-certificate", url[1], "-O", fileZip[1], NULL};
+            execv("/usr/bin/wget", argv);
+        } 
+  
+        else {
+            while((wait(&status)) > 0);
+  
+            if (fork() == 0) {       // child process -- download FILM
+              char *argv[] = {"wget", "--no-check-certificate", url[2], "-O", fileZip[2], NULL};
+              execv("/usr/bin/wget", argv);
+            }
+  ```
+  - Untuk nomor 1B, dibuat fungsi untuk mendownload file zip.
+  - `fork()` dipanggil untuk membuat child process, jika proses merupakan child process, maka kode dalam if akan dieksekusi, di dalam if memanggil kembali `fork()` untuk membuat proses lagi yang akan mendownload file zip foto menggunakan `wget` dan `execv` 
+  - kemudian proses akan menunggu sampai file selesai terdownload baru akan memanggil `fork()` kembali untuk memulai proses baru yang akan mendownload file zip musik.
+  - selanjutnya sama seperti sebelumnya, pemanggilan `fork()` setelah proses download sebelumnya selesai baru mendownload file  zip film menggunakan `wget` dan `execv`
 - **NOMOR 1C**
+  ```c
+  else { 
+     while((wait(&status)) > 0);
+     char *argv[] = {"unzip", "-q", "*.zip", NULL};
+     execv("/usr/bin/unzip", argv);
+  }
+  ```
+  - melanjutkan dari numor sebelumnya, apabila semua proses download sudah selesai, kode dalam else akan tereksekusi dan akan mengunzip semua files yang memiliki ekstensi `.zip`
+  - unzip menggunakan `unzip` dan `execv`
 - **NOMOR 1D**
+  ```c
+  void moveFiles() {
+    pid_t pid;
+    int status;
+    pid = fork();
+    
+  if ((chdir(cwd)) < 0) {
+      exit(EXIT_FAILURE);
+  }
+
+  if(pid==0){
+      if(fork() == 0){
+        char *find[] = {"find","/home/sena/SISOP/Modul2/soalShift/soal1/FOTO" , "-type", "f", "-exec", "mv", "{}", 
+                        "/home/sena/SISOP/Modul2/soalShift/soal1/Pyoto", ";", NULL};
+        execv("/usr/bin/find", find);
+      }
+  
+      else {
+        while((wait(&status)) > 0);
+        if (fork() == 0) {
+            char *find[] = {"find", "/home/sena/SISOP/Modul2/soalShift/soal1/MUSIK", "-type", "f", "-exec", "mv", "{}", 
+                            "/home/sena/SISOP/Modul2/soalShift/soal1/Musyik", ";", NULL};
+            execv("/usr/bin/find", find);
+        }
+  
+        else {
+            while((wait(&status)) > 0);
+            char *find[] = {"find", "/home/sena/SISOP/Modul2/soalShift/soal1/FILM", "-type", "f", "-exec", "mv", "{}", 
+                            "/home/sena/SISOP/Modul2/soalShift/soal1/Fylm", ";", NULL};
+            execv("/usr/bin/find", find);
+        }
+      }
+  }
+  ```
+  - untuk memindahkan files dibuat fungsi `moveFiles`
+  - pemanggilan `fork()`  untuk membuat child process, jika `pid==0` atau proses tersebut merupakan child process, kode dalam if akan tereksekusi.
+  - di dalam if yang pertama dilakukan kembali pemanggilan `fork()`, untuk memindahkan files.
+  - memindahkan files menggunakan `find source_path -type f -exec mv {} destination_path ;` yang akan mencari files dari source path kemudian `mv` memindahkannya ke destination path
+  - kemudian jika telah selesai memindahkan files dari file FOTO ke file Pyoto, selanjutnya akan memanggil `fork()` kembali untuk memindahkan files dari file MUSIK ke file Musyik dengan command yang sama seperti sebelumnya
+  - dan terakhir, setelah proses sebelumnya selesai, akan mengeksekusi kode dalam else yang akan memindahkan files dari file FILM ke file Fylm.
 - **NOMOR 1E**
 - **NOMOR 1F**
 ### **Screenshot Output**
