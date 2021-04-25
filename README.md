@@ -5,6 +5,18 @@ Anggota:
 - 05111940000141 Muhammad Farhan Haykal	
 - 05111940000158 Shahnaaz Anisa Firdaus
 
+## Daftar Isi
+  * [SOAL 1](#soal-1)
+    + [**Pembahasan**](#--pembahasan--)
+    + [**Screenshot Output**](#--screenshot-output--)
+    + [**Kendala**](#--kendala--)
+  * [SOAL 2](#soal-2)
+    + [**Pembahasan**](#--pembahasan---1)
+    + [**Screenshot Output**](#--screenshot-output---1)
+    + [**Kendala**](#--kendala---1)
+  * [SOAL 3](#soal-3)
+    + [**Kendala**](#--kendala---2)
+
 ## SOAL 1   
 Pada hari ulang tahun Stevany, Steven ingin memberikan Stevany zip berisikan hal-hal yang disukai Stevany. Steven ingin isi zipnya menjadi rapi dengan membuat folder masing-masing sesuai extensi.
 
