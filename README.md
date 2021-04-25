@@ -423,15 +423,19 @@ Dengan adanya 2 command yang diminta pada soal dimana yang pertama terdapat comm
 
 **Nomor 3e**
 Dengan adanya 2 command yaitu `-x` & `-z`, maka akan dihasilkan 2 output yang berbeda ketika killer dijalankan yang akan ditampilkan dalam gambar sebagai berikut :
--Command `-x`
+-Command `-x`:
+
 ![-x](https://user-images.githubusercontent.com/70801807/115993127-99c30000-a5fb-11eb-8b43-4fe06cd2e57f.PNG)
 ![-xproof](https://user-images.githubusercontent.com/70801807/115993168-cd058f00-a5fb-11eb-84c3-05d0e5ef55ac.PNG)
 ![-xprooof](https://user-images.githubusercontent.com/70801807/115993177-d55dca00-a5fb-11eb-8487-b8f533d58fc6.PNG)
+
 Dari foto di atas terlihat bahwa sesaat setelah killer dijalankan program masih meneruskan tugasnya hingga melakukan zip dan delete folder
 
--Commmand `-z`
+-Commmand `-z`:
+
 ![-z](https://user-images.githubusercontent.com/70801807/115993195-ed354e00-a5fb-11eb-8b5f-42a34189f9fc.PNG)
 ![-zprooooff](https://user-images.githubusercontent.com/70801807/115993201-f58d8900-a5fb-11eb-99ed-aae12c9d3655.PNG)
+
 Dari foto di atas terlihat bahwa sesaat setelah killer dijalakan program menghentikan prosesnya.
 
 ### **Kendala**
