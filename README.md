@@ -303,6 +303,7 @@ time_t time1 = time(NULL);
         sleep(40);
 ```
 Untuk nomor 3a akan dibuat folder dengan nama time stamp, dimana timestamp akan dihasilkan dengan pengambilan localtime dan dimasukkan ke dalam variabel currenT1 (pada code di atas) dan selanjutnya akan dilakukan `fork()` untuk membuat proses baru dan `"mkdir"` untuk membuat direktori, dan `sleep(40)` berguna agar folder dibuat sebanyak 40 detik sekali seperti gambar di bawah ini :
+
 ![prooo](https://user-images.githubusercontent.com/70801807/115993506-4487ee00-a5fd-11eb-9e4a-e8a45753a743.PNG)
 
 
@@ -336,6 +337,7 @@ while(wait(&stat_direct)>0);
                     }
 ```
 Untuk nomor 3b dibutuhkan `link` untuk mendownload, `(time2 & 1000) + 50` untuk ukuran foto, serta `currenT2` time stamp untuk penamaan foto, dan `sleep(5)` digunakan agar foto didownload sebanyak 5 detik sekali. Untuk hasilnya foto akan didownload pada folder yang telah dibuat selama 5 detik sekali dan akan ditunjukkan pada gambar di bawah  ini :
+
 ![-xproof](https://user-images.githubusercontent.com/70801807/115993359-9c722500-a5fc-11eb-9344-be4f09ad44d9.PNG)
 
 -**Nomor 3c**
@@ -372,6 +374,7 @@ void caes_ciph(char* sukses, int shift){
 }
 ```
 Setelah folder berisikan 10 foto maka program akan membuat file `status.txt` dimana berisikan pesan Download Succes yang dienkripsi dengan teknik Caesar Cipher Shift 5, hasilnya akan ditampilkan dalam gambar di bawah ini:
+
 ![stat](https://user-images.githubusercontent.com/70801807/115993612-ca0b9e00-a5fd-11eb-91b1-ea7827409116.PNG)
 ![caes](https://user-images.githubusercontent.com/70801807/115993618-ce37bb80-a5fd-11eb-8828-2bc58ad03e07.PNG)
 
