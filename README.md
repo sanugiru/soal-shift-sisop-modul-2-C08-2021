@@ -427,8 +427,14 @@ Dengan adanya 2 command yaitu `-x` & `-z`, maka akan dihasilkan 2 output yang be
 -Command `-x`:
 
 ![-x](https://user-images.githubusercontent.com/70801807/115993127-99c30000-a5fb-11eb-8b43-4fe06cd2e57f.PNG)
+gambar saat program dijalankan
+
 ![-xproof](https://user-images.githubusercontent.com/70801807/115993168-cd058f00-a5fb-11eb-84c3-05d0e5ef55ac.PNG)
+gambar isi di dalam folder
+
 ![-xprooof](https://user-images.githubusercontent.com/70801807/115993177-d55dca00-a5fb-11eb-8487-b8f533d58fc6.PNG)
+gambar saat proses selesai
+
 
 Dari foto di atas terlihat bahwa sesaat setelah killer dijalankan program masih meneruskan tugasnya hingga melakukan zip dan delete folder
 
