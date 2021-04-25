@@ -260,6 +260,13 @@ fclose(file);
 ```
 
 ### **Screenshot Output**
+![1](https://user-images.githubusercontent.com/55046884/115991813-7e082b80-a5f4-11eb-9dd0-95e83be6cb47.png)
+![2](https://user-images.githubusercontent.com/55046884/115991817-82ccdf80-a5f4-11eb-9e2b-fb0b53fd694d.png)
+isi keterangan.txt dari folder parrot
+
+
+![3](https://user-images.githubusercontent.com/55046884/115991821-86606680-a5f4-11eb-8e69-b5f67d1e6617.png)
+
 
 ### **Kendala**
 1. kesulitan searching syntax dari beberapa instruksi sehingga banyak waktu terbuang hanya untuk mencari syntax yang benar
