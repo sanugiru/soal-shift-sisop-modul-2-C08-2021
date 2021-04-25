@@ -267,7 +267,174 @@ isi keterangan.txt dari folder parrot
 
 ![3](https://user-images.githubusercontent.com/55046884/115991821-86606680-a5f4-11eb-8e69-b5f67d1e6617.png)
 
-
 ### **Kendala**
 1. kesulitan searching syntax dari beberapa instruksi sehingga banyak waktu terbuang hanya untuk mencari syntax yang benar
 2. saya menggunakan fork setiap pergantian proses sehingga membutuhkan code yang banyak
+
+## SOAL 3
+a. Ranora harus membuat sebuah program C yang dimana setiap 40 detik membuat sebuah direktori dengan nama sesuai timestamp [YYYY-mm-dd_HH:ii:ss].
+
+b.Setiap direktori yang sudah dibuat diisi dengan 10 gambar yang didownload dari https://picsum.photos/, dimana setiap gambar akan didownload setiap 5 detik. Setiap gambar yang didownload akan diberi nama dengan format timestamp [YYYY-mm-dd_HH:ii:ss] dan gambar tersebut berbentuk persegi dengan ukuran (n%1000) + 50 pixel dimana n adalah detik Epoch Unix.
+
+c.Setelah direktori telah terisi dengan 10 gambar, program tersebut akan membuat sebuah file “status.txt”, dimana didalamnya berisi pesan “Download Success” yang terenkripsi dengan teknik Caesar Cipher dan dengan shift 5. Caesar Cipher adalah Teknik enkripsi sederhana yang dimana dapat melakukan enkripsi string sesuai dengan shift/key yang kita tentukan. Misal huruf “A” akan dienkripsi dengan shift 4 maka akan menjadi “E”. Karena Ranora orangnya perfeksionis dan rapi, dia ingin setelah file tersebut dibuat, direktori akan di zip dan direktori akan didelete, sehingga menyisakan hanya file zip saja.
+
+d.Untuk mempermudah pengendalian program, pembimbing magang Ranora ingin program tersebut akan men-generate sebuah program “Killer” yang executable, dimana program tersebut akan menterminasi semua proses program yang sedang berjalan dan akan menghapus dirinya sendiri setelah program dijalankan. Karena Ranora menyukai sesuatu hal yang baru, maka Ranora memiliki ide untuk program “Killer” yang dibuat nantinya harus merupakan program bash.
+
+e.Pembimbing magang Ranora juga ingin nantinya program utama yang dibuat Ranora dapat dijalankan di dalam dua mode. Untuk mengaktifkan mode pertama, program harus dijalankan dsdengan argumen -z, dan Ketika dijalankan dalam mode pertama, program utama akan langsung menghentikan semua operasinya Ketika program Killer dijalankan. Sedangkan untuk mengaktifkan mode kedua, program harus dijalankan dengan argumen -x, dan Ketika dijalankan dalam mode kedua, program utama akan berhenti namun membiarkan proses di setiap direktori yang masih berjalan hingga selesai (Direktori yang sudah dibuat akan mendownload gambar sampai selesai dan membuat file txt, lalu zip dan delete direktori).
+
+##**Pembahasan**
+
+-**Nomor 3a**
+```
+time_t time1 = time(NULL);
+        struct tm* loc1 = localtime(&time1);
+        strftime(currenT1, 50, "%Y-%m-%d_%H:%M:%S", loc1);
+ 
+        chillid1 = fork();
+        if(chillid1<0){
+            exit(0);
+        }
+        if(chillid1==0){
+            if(fork() == 0){
+            char *argv[] = {"mkdir",currenT1, NULL};
+            execv("/bin/mkdir",argv);
+        }
+        ....
+        sleep(40);
+```
+Untuk nomor 3a akan dibuat folder dengan nama time stamp, dimana timestamp akan dihasilkan dengan pengambilan localtime dan dimasukkan ke dalam variabel currenT1 (pada code di atas) dan selanjutnya akan dilakukan `fork()` untuk membuat proses baru dan `"mkdir"` untuk membuat direktori, dan `sleep(40)` berguna agar folder dibuat sebanyak 40 detik sekali seperti gambar di bawah ini :
+![prooo](https://user-images.githubusercontent.com/70801807/115993506-4487ee00-a5fd-11eb-9e4a-e8a45753a743.PNG)
+
+
+-**Nomor 3b**
+```
+while(wait(&stat_direct)>0);
+ 
+                chillid2 = fork();
+                if(chillid2<0){
+                    exit(0);
+                }
+                if(chillid2 == 0){
+                    chdir(currenT1);
+                    for(int x=0;x<10;x++){
+                        time_t time2 = time(NULL);
+                        struct tm* loc2 = localtime(&time2);
+                    
+                        strftime(currenT2, 40, "%Y-%m-%d_%H:%M:%S", loc2);
+                        sprintf(link, "https://picsum.photos/%ld", (time2 % 1000) + 50);
+                        
+                        
+                        chillid3 = fork();
+                        if(chillid3 <0){
+                            exit(0);
+                        }
+                        if(chillid3 == 0){
+                            char *argv[] = {"wget", link, "-O", currenT2, "-o", "/dev/null", NULL};
+                            execv("/usr/bin/wget",argv);
+                        }
+                        sleep(5);
+                    }
+```
+Untuk nomor 3b dibutuhkan `link` untuk mendownload, `(time2 & 1000) + 50` untuk ukuran foto, serta `currenT2` time stamp untuk penamaan foto, dan `sleep(5)` digunakan agar foto didownload sebanyak 5 detik sekali. Untuk hasilnya foto akan didownload pada folder yang telah dibuat selama 5 detik sekali dan akan ditunjukkan pada gambar di bawah  ini :
+![-xproof](https://user-images.githubusercontent.com/70801807/115993359-9c722500-a5fc-11eb-9344-be4f09ad44d9.PNG)
+
+-**Nomor 3c**
+```
+                    while(wait(&stat_download)>0);
+                    char sukses[30] = "Download Succes";
+                    caes_ciph(sukses, 5);
+                    FILE* encrypt = fopen("status.txt", "w");
+                    fprintf(encrypt,"%s",sukses);
+                    fclose(encrypt);
+```
+Fungsi Caesar Cipher :
+```
+void caes_ciph(char* sukses, int shift){
+    char huruf;
+    int x;
+    for(x=0;sukses[x]!='\0';x++){
+        huruf = sukses[x];
+        if(huruf>='a'&&huruf<='z'){
+            huruf+=shift;
+            if(huruf>'z')
+                huruf = huruf - 'z' + 'a' - 1;
+            sukses[x] =  huruf;
+        }
+        else if (huruf >= 'A' && huruf <= 'Z')
+        {
+            huruf+=shift;
+            if(huruf>'Z')
+                huruf = huruf - 'Z' + 'A' - 1;
+            sukses[x] =  huruf;
+        }
+        
+    }
+}
+```
+Setelah folder berisikan 10 foto maka program akan membuat file `status.txt` dimana berisikan pesan Download Succes yang dienkripsi dengan teknik Caesar Cipher Shift 5, hasilnya akan ditampilkan dalam gambar di bawah ini:
+![stat](https://user-images.githubusercontent.com/70801807/115993612-ca0b9e00-a5fd-11eb-91b1-ea7827409116.PNG)
+![caes](https://user-images.githubusercontent.com/70801807/115993618-ce37bb80-a5fd-11eb-8828-2bc58ad03e07.PNG)
+
+```
+  while(wait(&stat_enkripsi)>0);
+                    chdir("..");
+                    strcpy(currentT3, currenT1);
+                    strcat(currentT3, ".zip");
+ 
+                    chillid4 = fork();
+                    if(chillid4 <0)
+                        exit(0);
+                    if(chillid4 == 0){
+                        char *argv[] = {"zip", "-r", currentT3, currenT1, NULL};
+                        execv("/usr/bin/zip", argv);
+                    }
+```
+Untuk melakukan zip, pertama akan dilakukan string copy currenT1 ke currentT3 {dimana currenT1 adalah nama folder yang sudah dibuat}, tujuan string copy ini agar nama folder sesudah dizip tetap sama dengan nama folder sesudah di zip, lalu akan dibuat sebuah proses baru dengan fork dan jika tersedia maka akan dibuat zip dengan nama currentT3.
+
+```
+                    while(wait(&stat_zip)>0);
+                    chillid5 = fork();
+                    if(chillid5<0)
+                        exit(0);
+                    if(chillid5==0){
+                        char *argv[] = {"rm", "-r", currenT1, NULL};
+                        execv("/bin/rm", argv);
+                    }
+```
+Untuk melakukan delete, pertama akan menunggu proses zip selesai lalu membuat proses baru dengan fork dan selanjutnya folder yang telah di zip di delete dengan command "rm"
+
+**Nomor 3d**
+```
+    if(argv[1][1]=='x'){
+        FILE* kill;
+        kill = fopen("killer.sh", "w");
+        fprintf(kill, "#!/bin/bash\nkillall -15 no3\necho \'Killed program.\'\nrm killer.sh");
+        fclose(kill);
+        signal(SIGTERM,changSIGN);
+    }
+    if(argv[1][1]=='z'){
+        FILE* kill;
+        kill = fopen("killer.sh", "w");
+        fprintf(kill, "#!/bin/bash\nkillall no3\necho \'Killed program.\'\nrm killer.sh");
+        fclose(kill);
+    }
+```
+Dengan adanya 2 command yang diminta pada soal dimana yang pertama terdapat command `-x` dimana command `-x` akan membuat program killer membunuh parent proses sedangkan membiarkan child proses bekerja hingga selesai, sedangkan untuk command `-z` program killer akan membunuh semua proses yang sedang berjalan sehingga program akan berhenti sesaat setelah program kille dijalankan
+
+**Nomor 3e**
+Dengan adanya 2 command yaitu `-x` & `-z`, maka akan dihasilkan 2 output yang berbeda ketika killer dijalankan yang akan ditampilkan dalam gambar sebagai berikut :
+-Command `-x`
+![-x](https://user-images.githubusercontent.com/70801807/115993127-99c30000-a5fb-11eb-8b43-4fe06cd2e57f.PNG)
+![-xproof](https://user-images.githubusercontent.com/70801807/115993168-cd058f00-a5fb-11eb-84c3-05d0e5ef55ac.PNG)
+![-xprooof](https://user-images.githubusercontent.com/70801807/115993177-d55dca00-a5fb-11eb-8487-b8f533d58fc6.PNG)
+Dari foto di atas terlihat bahwa sesaat setelah killer dijalankan program masih meneruskan tugasnya hingga melakukan zip dan delete folder
+
+-Commmand `-z`
+![-z](https://user-images.githubusercontent.com/70801807/115993195-ed354e00-a5fb-11eb-8b5f-42a34189f9fc.PNG)
+![-zprooooff](https://user-images.githubusercontent.com/70801807/115993201-f58d8900-a5fb-11eb-99ed-aae12c9d3655.PNG)
+Dari foto di atas terlihat bahwa sesaat setelah killer dijalakan program menghentikan prosesnya.
+
+### **Kendala**
+1. Kurang paham dalam pembuatan killer.sh sehingga berdampak pada gagalnya program mode -x dijalankan
+2. Salah penempatan proses zip dan delete yang mengakibatkan folder dibuat lebih lama dari 40 detik
+
